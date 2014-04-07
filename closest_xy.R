@@ -1,6 +1,12 @@
-closest_xy = function(slat, slon){
+closest_xy = function(slat, slon,infolder,infile){
+  require(ncdf4)
   
-  nc <- nc_open('/Users/elizabethcowdery/ED Files/NetCDF Scripts/test_netcdf/prate/prate.2012.nc')
+  test.file = dir(infolder,infile,full.names=TRUE)
+  test.file = test.file[grep("*.nc",test.file)]
+  if(length(test.file)==0) return(NULL)
+  test.file = test.file[1]
+  
+  nc <- nc_open(test.file)
   lat  <- ncvar_get(nc,"lat")
   lon  <- ncvar_get(nc,"lon")
   

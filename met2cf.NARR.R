@@ -1,6 +1,8 @@
-library(PEcAn.all)
+met2cf.NARR(infolder,infile,outfolder){
+
+#library(PEcAn.all)
 library(ncdf4)
-library(RPostgreSQL)
+#library(RPostgreSQL)
 
 # Defaults
 vlist <- c("pres.sfc", "dswrf", "dlwrf", "air.2m", "shum.2m", "prate" )
@@ -13,9 +15,6 @@ outfile <- "/projectnb/cheas/gapmacro/NARR/NewNARR"
 # siteid   <- 336       #CWT
 # site_abriv <- "CWT"
 
-# Mt Rainier, WA
- site_lat <- 46.8529  
- site_lon <- -121.7604 
  # x <- 140
  # y <- 136
  # siteid   <- ?      
@@ -33,28 +32,7 @@ system(paste("module load netcdf"))
 }
 system(paste("cd ", outfile))
 system(paste("/projectnb/cheas/gapmacro/NARR/NewNARR/nc_formatting.sh"))
-
-# Find closest coordinates to site
-close <- closest_xy(site_lat, site_lon)
-x <- close$x
-y <- close$y
-
-# Subset to site and upload
-
-dbparms <- list(driver="PostgreSQL" , user = "bety", dbname = "bety", password = "bety")
-con     <- db.open(dbparms)
-
-mimetype   <- 'CF Meteorology'
-formatname <- 'application/x-netcdf'
-
-for (year in seq(end_year,start_year,by=-1)){
   
-  system(paste("ncks -d x,",x,",",x, " -d y,",y,",",y," ", year, ".nc ",year, "_sub.nc",sep=""))
-  
-  filename   <- paste(year, "_sub.nc",sep="")
-  startdate  <- paste(year,'-01-01',sep="")
-  enddate    <- paste(year,'-12-31',sep="")
-  
-  dbfile.input.insert(filename, siteid, startdate, enddate, mimetype, formatname, con=con) 
-  
+}
+
 }
