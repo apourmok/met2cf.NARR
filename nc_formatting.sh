@@ -1,7 +1,8 @@
-vars=("pres.sfc" "dswrf" "dlwrf" "air.2m" "shum.2m" "prate" )
-nvars=("air_pressure" "surface_downwelling_shortwave_flux" "surface_downwelling_longwave_flux" "air_temperature" "specific_humidity" "precipitation_flux" )
+vars=("pres.sfc" "dswrf" "dlwrf" "air.2m" "shum.2m" "prate" "uwnd.10m" "vwnd.10m")
+svars=("pres" "dswrf" "dlwrf" "air" "shum" "prate" "uwnd" "vwnd")
+nvars=("air_pressure" "surface_downwelling_shortwave_flux" "surface_downwelling_longwave_flux" "air_temperature" "specific_humidity" "precipitation_flux" "eastward_wind" "northward_wind" )
 
-cd /projectnb/cheas/gapmacro/NARR/NewNARR
+cd /projectnb/cheas/gapmacro/NARR/RawNARR2
 
 sep="."
 suffix=".nc"
@@ -23,8 +24,8 @@ do
 
             if [ -f $file ]
                 then
-                ncrename -v ${svars[$k]},${nvars[$k]} $file
-                mv $file ${nvars[$k]}$sep$year$suffix
+                cp $file ${nvars[$k]}$sep$year$suffix
+                ncrename -v ${svars[$k]},${nvars[$k]} ${nvars[$k]}$sep$year$suffix
             fi
         done
 done
@@ -63,5 +64,6 @@ for i in {1979..2012}
 
                     fi
                 fi
+                rm $file
         done
 done

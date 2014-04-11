@@ -6,6 +6,7 @@ library(ncdf4)
 
 # Defaults
 vlist <- c("pres.sfc", "dswrf", "dlwrf", "air.2m", "shum.2m", "prate" )
+vlist <- c(vlist,"vwnd.10m","uwnd.10m")
 start_year <- 1979 
 end_year <- 2012
 outfile <- "/projectnb/cheas/gapmacro/NARR/NewNARR"
@@ -21,6 +22,7 @@ outfile <- "/projectnb/cheas/gapmacro/NARR/NewNARR"
  site_abriv <- "WA"
 
 outfile <- "/projectnb/cheas/gapmacro/NARR/NewNARR"
+outfile <- "/projectnb/cheas/gapmacro/NARR/RawNARR2"
 
 system(paste("module load netcdf"))
 
